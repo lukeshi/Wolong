@@ -129,9 +129,17 @@ static CGFloat const kContentTextWidth = 250.0f;
 
 - (void)layoutSubviews
 {
+    /*
     CGSize size = [message sizeWithFont:[UIFont systemFontOfSize:kContentFontSize]
                                constrainedToSize:CGSizeMake(kContentTextWidth, CGFLOAT_MAX)
                                    lineBreakMode:NSLineBreakByWordWrapping];
+    */
+    UIFont *font = [UIFont systemFontOfSize:kContentFontSize];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName: font}];
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){kContentTextWidth, CGFLOAT_MAX}
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                               context:nil];
+    CGSize size = rect.size;
     
     UILabel *sender = (UILabel *)[self viewWithTag:kSenderTag];
     //CGSize size2 = [sender.text sizeWithFont:sender.font];

@@ -132,10 +132,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     CGSize size = [@"Hello"
                    sizeWithFont:[UIFont systemFontOfSize:13]
                    constrainedToSize:CGSizeMake(200, CGFLOAT_MAX)
                    lineBreakMode:NSLineBreakByWordWrapping];
+    */
+    
+    NSString *text = @"The text that I want to wrap in a table cell.";
+    UIFont *font = [UIFont systemFontOfSize:13.0];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: font}];
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){200.0, CGFLOAT_MAX}
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                               context:nil];
+    CGSize size = rect.size;
+    
     return MAX(size.height+30, 66);
 }
 
